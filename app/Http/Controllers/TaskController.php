@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Task;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
@@ -17,14 +18,16 @@ class TaskController extends Controller
 
     public function create()
     {
-        return view('tasks.create');
+        $tags = Tag::all();
+        return view('tasks.create', ['tags' => $tags]);
     }
 
     public function store(Request $request)
     {
         $request->validate(['title' => 'required']);
+        $task = Task::create(['title' => $request->title]);
+        $task->tags()->attach($request->tags);
 
-        Task::create(['title' => $request->title]);
         return redirect()->route('tasks.index');
     }
 
@@ -35,7 +38,11 @@ class TaskController extends Controller
 
     public function edit(Task $task)
     {
-        return view('tasks.edit', ['task' => $task]);
+        $tags = Tag::all();
+        return view('tasks.edit', [
+            'task' => $task,
+            'tags' => $tags
+        ]);
     }
 
     public function update(Request $request, Task $task)
@@ -46,6 +53,8 @@ class TaskController extends Controller
             'title' => $request->title,
             'completed' => $request->has('completed')
         ]);
+        $task->tags()->sync($request->tags ?? []);
+
         return redirect()->route('tasks.index');
     }
 
