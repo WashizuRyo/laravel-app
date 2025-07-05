@@ -15,6 +15,12 @@
       </a>
     </div>
   </div>
+  @if(request('tag'))
+  {{ request('tag') }}が紐づいているタスクを表示しています
+    <div class="mb-2 text-red-400 hover:underline">
+      <a href="{{ route('tasks.index') }}">すべてのタスクを表示する</a>
+    </div>
+  @endif
 
   @if($tasks->count() > 0)
     <div class="space-y-4">
@@ -47,7 +53,7 @@
           @if($task->tags->count() > 0)
             <div class="flex flex-wrap gap-2">
               @foreach ($task->tags as $tag)
-                <a href="{{ route('tags.show', $tag) }}" 
+                <a href="{{ route('tasks.index', ['tag' => $tag->name]) }}" 
                    class="bg-blue-100 hover:bg-blue-200 text-blue-800 text-xs font-medium px-2 py-1 rounded transition duration-200">
                   {{ $tag->name }}
                 </a>
