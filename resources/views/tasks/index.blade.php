@@ -1,11 +1,7 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <title>タスク管理</title>
-</head>
-<body>
-  <h1>タスク一覧</h1>
+@extends('layouts.app')
+
+@section('content')
+  <h1 class="text-green-500">タスク一覧</h1>
 
   <a href="{{ route('tasks.create') }}">+ 新規タスクを追加</a>
 
@@ -30,4 +26,4 @@
       @endforeach
     @endforeach
   </ul>
-</body>
+@endsection
