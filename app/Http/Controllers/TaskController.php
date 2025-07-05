@@ -8,11 +8,20 @@ use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $tasks = Task::orderBy('completed')
-                    ->orderBy('title')
-                    ->get();
+        $query = Task::query();
+
+        if ($request->has('tag')) {
+            $tagName = $request->query('tag');
+            
+            $query->whereHas('tags', function ($q) use ($tagName) {
+                $q->where('name', $tagName);
+            });
+        }
+
+        $tasks = $query->orderBy('completed')->orderBy('title')->get();
+
         return view('tasks.index', ['tasks' => $tasks]);
     }
 
