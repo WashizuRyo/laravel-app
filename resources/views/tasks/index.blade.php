@@ -25,6 +25,9 @@
           @endif
         </a>
       </li>
+      @foreach ($task->tags as $tag)
+        <div>{{ $tag->name }}</div>    
+      @endforeach
     @endforeach
   </ul>
 </body>
