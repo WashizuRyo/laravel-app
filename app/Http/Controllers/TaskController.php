@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Task;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
@@ -11,7 +12,10 @@ class TaskController extends Controller
      */
     public function index()
     {
-        //
+        $tasks = Task::orderBy('completed')
+                    ->orderBy('title')
+                    ->get();
+        return view('tasks.index', ['tasks' => $tasks]);
     }
 
     /**
@@ -19,7 +23,7 @@ class TaskController extends Controller
      */
     public function create()
     {
-        //
+        return view('tasks.create');
     }
 
     /**
@@ -27,38 +31,48 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate(['title' => 'required']);
+
+        Task::create(['title' => $request->title]);
+        return redirect()->route('tasks.index');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Task $task)
     {
-        //
+        return view('tasks.show', ['task' => $task]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Task $task)
     {
-        //
+        return view('tasks.edit', ['task' => $task]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Task $task)
     {
-        //
+        $request->validate(['title' => 'required']);
+
+        $task->update([
+            'title' => $request->title,
+            'completed' => $request->has('completed')
+        ]);
+        return redirect()->route('tasks.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Task $task)
     {
-        //
+        $task->delete();
+        return redirect()->route('tasks.index');
     }
 }
