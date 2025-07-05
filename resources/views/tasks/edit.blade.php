@@ -10,26 +10,35 @@
     </a>
   </div>
 
+  @if ($errors->any())
+    <ul class="mb-2">
+        @foreach ($errors->all() as $error)
+            <li class="text-red-600">{{ $error }}</li>
+        @endforeach
+    </ul>
+  @endif
+
+
   <form action="{{ route('tasks.update', $task) }}" method="post" class="space-y-6">
     @csrf
     @method('PUT')
     
-    <div>
+    <div class="mb-2">
       <label for="title" class="block text-sm font-medium text-gray-700 mb-2">
         タスク名
       </label>
       <input type="text" 
              name="title" 
              id="title"
-             value="{{ $task->title }}" 
+             value="{{ old('title') }}" 
              class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
     </div>
 
-    <div class="flex items-center">
+    <div class="flex items-center mb-4">
       <input type="checkbox" 
              name="completed" 
              id="completed"
-             @if($task->completed) checked @endif
+             @if(old('completed', $task->completed)) checked @endif
              class="h-4 w-4 text-green-600 border-gray-300 rounded focus:ring-green-500">
       <label for="completed" class="ml-2 text-sm font-medium text-gray-700">
         完了済み
@@ -44,7 +53,7 @@
             <input type="checkbox" 
                    name="tags[]" 
                    value="{{ $tag->id }}" 
-                   @if(isset($task) && $task->tags->contains($tag->id)) checked @endif
+                   @if(old('tags') ? in_array($tag->id, old('tags')) : isset($task) && $task->tags->contains($tag->id)) checked @endif
                    class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
             <span class="ml-2 text-sm text-gray-700">{{ $tag->name }}</span>
           </label>  
