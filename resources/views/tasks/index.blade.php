@@ -4,10 +4,16 @@
 <div class="max-w-2xl mx-auto bg-white shadow-lg rounded-lg p-8 mt-8">
   <div class="flex justify-between items-center mb-6">
     <h1 class="text-2xl font-bold text-gray-800">タスク一覧</h1>
-    <a href="{{ route('tasks.create') }}" 
-       class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-md transition duration-200 ease-in-out transform hover:scale-105">
-      + 新規タスクを追加
-    </a>
+    <div class="flex space-x-3">
+      <a href="{{ route('tags.index') }}" 
+         class="bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded-md transition duration-200 ease-in-out transform hover:scale-105">
+        タグ管理
+      </a>
+      <a href="{{ route('tasks.create') }}" 
+         class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-md transition duration-200 ease-in-out transform hover:scale-105">
+        + 新規タスクを追加
+      </a>
+    </div>
   </div>
 
   @if($tasks->count() > 0)
@@ -41,9 +47,10 @@
           @if($task->tags->count() > 0)
             <div class="flex flex-wrap gap-2">
               @foreach ($task->tags as $tag)
-                <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2 py-1 rounded">
+                <a href="{{ route('tags.show', $tag) }}" 
+                   class="bg-blue-100 hover:bg-blue-200 text-blue-800 text-xs font-medium px-2 py-1 rounded transition duration-200">
                   {{ $tag->name }}
-                </span>
+                </a>
               @endforeach
             </div>
           @endif
