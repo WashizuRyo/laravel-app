@@ -26,7 +26,7 @@
                 {{ $tag->name }}
               </span>
               <span class="ml-3 text-sm text-gray-500">
-                {{ $tag->tasks->count() }}個のタスクで使用中
+                {{ $tag->tasks_count }}個のタスクで使用中
               </span>
             </div>
             

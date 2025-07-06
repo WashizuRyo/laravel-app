@@ -9,7 +9,7 @@ class TagController extends Controller
 {
     public function index()
     {
-        $tags = Tag::withCount('tasks')->get();
+        $tags = Tag::withCount('tasks')->orderBy('tasks_count', 'desc')->get();
         return view('tags.index', ['tags' => $tags]);
     }
 
