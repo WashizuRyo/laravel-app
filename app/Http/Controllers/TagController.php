@@ -52,4 +52,14 @@ class TagController extends Controller
 
         return redirect()->route('tags.index');
     }
+
+    public function cleanup()
+    {
+        $count = Tag::doesntHave('tasks')->count();
+
+        Tag::doesntHave('tasks')->delete();
+
+        return redirect()->route('tags.index')
+                         ->with('message', $count . '個の未使用タグを削除しました｡');
+    }
 }

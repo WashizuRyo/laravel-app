@@ -9,4 +9,6 @@ Route::get('/', function () {
 });
 
 Route::resource('tasks', TaskController::class);
+
+Route::delete('/tags/cleanup', [TagController::class, 'cleanup'])->name('tags.cleanup');
 Route::resource('tags', TagController::class);

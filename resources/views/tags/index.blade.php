@@ -16,6 +16,16 @@
     </div>
   </div>
 
+  @include('partials.flash')
+
+  <div class="mb-2">
+    <form action="{{ route('tags.cleanup') }}" method="post" onsubmit="return confirm('本当に未使用のタグを全て削除しますか')">
+      @csrf
+      @method('DELETE')
+      <button type="submit" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-md transition duration-200 ease-in-out transform hover:scale-105">未使用タグを一括削除</button>
+    </form>
+  </div>
+
   @if($tags->count() > 0)
     <div class="space-y-4">
       @foreach ($tags as $tag)
