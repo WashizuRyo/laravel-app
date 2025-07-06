@@ -38,7 +38,7 @@
       <input type="checkbox" 
              name="completed" 
              id="completed"
-             @if(old('completed', $task->completed)) checked @endif
+             @if(old('completed', $task->completed_at)) checked @endif
              class="h-4 w-4 text-green-600 border-gray-300 rounded focus:ring-green-500">
       <label for="completed" class="ml-2 text-sm font-medium text-gray-700">
         完了済み

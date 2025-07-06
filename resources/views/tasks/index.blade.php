@@ -28,7 +28,7 @@
         <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition duration-200">
           <div class="flex justify-between items-start mb-2">
             <a href="{{ route('tasks.edit', $task) }}" class="flex-1">
-              @if ($task->completed)
+              @if ($task->completed_at)
                 <s class="text-gray-500 text-lg">{{ $task->title }}</s>
                 <span class="ml-2 bg-green-100 text-green-800 text-xs font-medium px-2 py-1 rounded">完了</span>
               @else

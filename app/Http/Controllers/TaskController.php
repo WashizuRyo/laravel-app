@@ -20,7 +20,7 @@ class TaskController extends Controller
             });
         }
 
-        $tasks = $query->orderBy('completed')->orderBy('title')->get();
+        $tasks = $query->orderBy('completed_at')->orderBy('title')->get();
 
         return view('tasks.index', ['tasks' => $tasks]);
     }
@@ -60,7 +60,7 @@ class TaskController extends Controller
 
         $task->update([
             'title' => $request->title,
-            'completed' => $request->has('completed')
+            'completed_at' => $request->has('completed') ? now() : null,
         ]);
         $task->tags()->sync($request->tags ?? []);
 

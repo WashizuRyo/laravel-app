@@ -79,9 +79,9 @@ CREATE UNIQUE INDEX "failed_jobs_uuid_unique" on "failed_jobs"("uuid");
 CREATE TABLE IF NOT EXISTS "tasks"(
   "id" integer primary key autoincrement not null,
   "title" varchar not null,
-  "completed" tinyint(1) not null default '0',
   "created_at" datetime,
-  "updated_at" datetime
+  "updated_at" datetime,
+  "completed_at" datetime
 );
 CREATE TABLE IF NOT EXISTS "tags"(
   "id" integer primary key autoincrement not null,
@@ -104,3 +104,5 @@ INSERT INTO migrations VALUES(3,'0001_01_01_000002_create_jobs_table',1);
 INSERT INTO migrations VALUES(4,'2025_07_03_082211_create_tasks_table',2);
 INSERT INTO migrations VALUES(5,'2025_07_05_025014_create_tags_table',3);
 INSERT INTO migrations VALUES(6,'2025_07_05_025157_create_tag_task_table',3);
+INSERT INTO migrations VALUES(7,'2025_07_06_095418_remove_completed_from_tasks_table',4);
+INSERT INTO migrations VALUES(8,'2025_07_06_095528_add_completed_at_to_tasks_table',4);
