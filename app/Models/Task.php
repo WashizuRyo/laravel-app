@@ -15,4 +15,9 @@ class Task extends Model
     {
         return $this->belongsToMany(Tag::class);
     }
+
+    public function User()
+    {
+        return $this->belongTo(User::class);
+    }
 }
